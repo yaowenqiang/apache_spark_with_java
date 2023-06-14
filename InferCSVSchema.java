@@ -10,12 +10,12 @@ public class InferCSVSchema {
                 .getOrCreate();
 
         Dataset<Row> df = spark.read().format("csv")
-                .option("header", "true")
+//                .option("header", true)
                 .option("multiline", true)
-                .option("sep",";")
-                .option("quote","")
-                .option("dateFormat","M/d/y")
-                .option("inferSchema", true)
+//                .option("sep",";")
+//                .option("quote","^")
+//                .option("dateFormat","M/d/y")
+//                .option("inferSchema", true)
                 .load("amazonProducts.txt");
 
         System.out.println("Excerpt of the data frame content:");
