@@ -42,9 +42,10 @@ public class DefineCSVSchema {
 
         Dataset<Row> df = spark.read().format("csv")
                 .option("header", "true")
-                .option("multiline", true)
+//                .option("multiline", true)
                 .option("sep", ";")
                 .option("dateformat","M/d/y")
+                .schema(schema)
                 .load("amazonProducts.txt");
         df.show(5,25);
         df.printSchema();
