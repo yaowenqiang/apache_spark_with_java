@@ -28,7 +28,8 @@ public class MapAndReduce {
         ds = ds.map(new StringMapper(), Encoders.STRING());
         ds = ds.map((MapFunction<String, String>) row -> "hello " + row, Encoders.STRING());
         ds.show();
-//        String str = ds.reduce((ReduceFunction<String>) row1, row2 -> row1 + row2 , Encoders.STRING());
+        String str1 = ds.reduce((ReduceFunction<String>) (row1, row2) -> row1 + " --- " + row2 );
+        System.out.println(str1);
         String str = ds.reduce(new StringReducer());
         System.out.println(str);
     }
