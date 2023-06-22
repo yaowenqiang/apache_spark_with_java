@@ -1,6 +1,7 @@
 import org.apache.log4j.Level;
 import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.*;
+import static org.apache.spark.sql.functions.*;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
@@ -20,11 +21,23 @@ public class CsvToDatasetHouseToDataframe {
                 .option("header", true)
                 .option("sep",";")
                 .load(filename);
+        System.out.println("House ingested in a dataframe:");
         df.show();
         df.printSchema();
 
         Dataset<House> ds = df.map(new HouseMapper(), Encoders.bean(House.class));
+        System.out.println("House ingested in a dataset:");
         ds.show();
+        ds.printSchema();
+
+        Dataset<Row> df2 = ds.toDF();
+
+        // TODO vacantBy.year value is wrong
+
+        df2 = df2.withColumn("formattedDate", concat(df2.col("vacantBy.date"),lit("_"), df2.col("vacantBy.year")));
+        df2.show();
+        df2.printSchema();
+
     }
 
     static class HouseMapper implements MapFunction<Row, House> {
