@@ -26,6 +26,7 @@ public class DatasetJoins {
                 .option("inferSchema","true")
                 .option("header", true)
                 .load(studentsFile);
+//        studentDf  = studentDf.withColumnRenamed("GPA", "gpa");
         studentDf.show();
 
         String gradeChartFile = "grade_chart.csv";
@@ -35,16 +36,17 @@ public class DatasetJoins {
                 .load(gradeChartFile);
         gradeChartDf.show();
 
+
 //        studentDf = studentDf.join(gradeChartDf,studentDf.col("GPA")
 //                 .equalTo(gradeChartDf.col("gpa")));
 //        studentDf.join(gradeChartDf, "GPA").show();
 //        studentDf.show();
 //        Dataset<Row> joinedDf = studentDf.join(gradeChartDf,studentDf.col("GPA")
 //                 .equalTo(gradeChartDf.col("gpa")));
-        Dataset<Row> joinedDf = studentDf.join(gradeChartDf,studentDf.col("GPA")
-                .equalTo(gradeChartDf.col("GPA")));
+        Dataset<Row> joinedDf = studentDf.join(gradeChartDf,studentDf.col("GPA").equalTo(gradeChartDf.col("gpa")));
+//        Dataset<Row> joinedDf = studentDf.join(gradeChartDf,"gpa");
         joinedDf.printSchema();
-//        joinedDf.show(10);
+        joinedDf.show(10);
 //        joinedDf.filter(gradeChartDf.col("gpa").between(1, 3, 5));
 //        joinedDf.select(studentDf.col("student_name")
 //                , studentDf.col("favorite_book_title")
