@@ -44,10 +44,12 @@ public class CustomerAndProducts {
                                             .drop(productDf.col("product_id"));
         joinedDf.printSchema();
         joinedDf.groupBy("first_name").count().show();
-        joinedDf.groupBy("product_name", "product_name").agg(
+        Dataset<Row> aggDf = joinedDf.groupBy("product_name", "product_name").agg(
                 count("product_name").as("number_of_purchases"),
                 max("product_price").as("most_exp_purchases")
-                        ).show();
+                        );
+        aggDf.show();
 //        joinedDf.show(1);
+
     }
 }
