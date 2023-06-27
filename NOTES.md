@@ -17,3 +17,10 @@ Dataset vs Dataframe
 > Dataframe is much more efficient
 
 spark tungsten
+
+
+# DAG (Directed Acyclic Graph)
+
+Recipe contains instructions on what to do in a stepwise fashion
+
+Procedural Steps that single directional

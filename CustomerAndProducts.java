@@ -20,21 +20,21 @@ public class CustomerAndProducts {
                 .option("inferSchema","true")
                 .option("header", true)
                 .load(customerFile);
-        customerDf.show();
+//        customerDf.show();
 
         String productFile = "products.csv";
         Dataset<Row> productDf = spark.read().format("csv")
                 .option("inferSchema","true")
                 .option("header", true)
                 .load(productFile);
-        productDf.show();
+//        productDf.show();
 
         String purchasesFile = "purchases.csv";
         Dataset<Row> purchasesDf = spark.read().format("csv")
                 .option("inferSchema","true")
                 .option("header", true)
                 .load(purchasesFile);
-        purchasesDf.show();
+//        purchasesDf.show();
 
         Dataset<Row> joinedDf = customerDf.join(purchasesDf,customerDf.col("customer_id").equalTo(purchasesDf.col("customer_id")))
                                             .join(productDf,purchasesDf.col("product_id").equalTo(productDf.col("product_id")))
@@ -43,13 +43,22 @@ public class CustomerAndProducts {
                                             .drop(purchasesDf.col("product_id"))
                                             .drop(productDf.col("product_id"));
         joinedDf.printSchema();
-        joinedDf.groupBy("first_name").count().show();
+//        joinedDf.groupBy("first_name").count().show();
         Dataset<Row> aggDf = joinedDf.groupBy("product_name", "product_name").agg(
                 count("product_name").as("number_of_purchases"),
                 max("product_price").as("most_exp_purchases")
                         );
-        aggDf.show();
+        aggDf = aggDf.drop("number_of_purchases");
+        // a recipe containing instructions is generated
+//        aggDf.show();
 //        joinedDf.show(1);
+        Dataset<Row> initialDf = aggDf;
+
+        for(int i = 0; i <500; i++) {
+            aggDf = aggDf.union(initialDf);
+        }
+
+        joinedDf.show();
 
     }
 }
