@@ -58,6 +58,7 @@ public class CustomerAndProducts {
             aggDf = aggDf.union(initialDf);
         }
 
+        joinedDf.collectAsList();
         joinedDf.show();
 
     }
