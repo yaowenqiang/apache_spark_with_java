@@ -8,6 +8,7 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQuery;
+import org.apache.spark.sql.streaming.StreamingQueryException;
 
 
 import javax.xml.crypto.Data;
@@ -18,8 +19,8 @@ public class StreamingSocketApplication {
 
         // nc -lk 9999
 
-        Logger.getLogger("org.apache")
-                .setLevel(Level.WARN);
+//        Logger.getLogger("org.apache")
+//                .setLevel(Level.WARN);
         SparkSession spark = SparkSession.builder()
                 .appName("StreamingSocketApplication")
                 .master("local")
@@ -29,7 +30,7 @@ public class StreamingSocketApplication {
                 .readStream()
                 .format("socket")
                 .option("host", "localhost")
-                .option("port", 9999)
+                .option("port", 8881)
                 .load();
 
         Dataset<String> words = lines
@@ -40,7 +41,11 @@ public class StreamingSocketApplication {
                 .outputMode("complete")
                 .format("console")
                 .start();
-        query.awaitTermination();
+        try {
+            query.awaitTermination();
+        } catch (StreamingQueryException exception) {
+            System.out.println(exception.cause());
+        }
 
 
 
