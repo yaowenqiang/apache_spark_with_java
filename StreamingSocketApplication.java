@@ -30,7 +30,7 @@ public class StreamingSocketApplication {
                 .readStream()
                 .format("socket")
                 .option("host", "localhost")
-                .option("port", 8881)
+                .option("port", 9999)
                 .load();
 
         Dataset<String> words = lines
