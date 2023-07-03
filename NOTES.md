@@ -30,3 +30,16 @@ https://files.pushshift.io/redit
 https://web.archive.org/web/20221022155442/https://files.pushshift.io/reddit/comments/
 
 > zstd -d  RC_2007-01.zst --long=31
+
+
+## SparkSql
+
+Overview:
+
++ A library build on Spark Core that supports SQL like data and operations
++ Make it easy for traditional RDBMS developers to translation to big data
++ Works with "structured" data that has a schema
++ Seamlessly mix SQL queries with Spark programs
++ Supports JDBC
++ Helps "mix" n "match" different RDBMS and NoSQL data sources.
+
